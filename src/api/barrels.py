@@ -110,13 +110,13 @@ def get_wholesale_purchase_plan(wholesale_catalog: list[Barrel]):
         max_price = 150 # try to force barrels sold to be small barrels to increase variety
 
     for sale in wholesale_catalog:
-        if sale.potion_type == [1, 0, 0, 0] and max_price >= sale.price and sale.price >= min_price:
+        if sale.potion_type == [1, 0, 0, 0] and max_price >= sale.price and sale.price >= min_price and sale.ml_per_barrel < ml_room:
             red_memory.append(sale)
-        elif sale.potion_type == [0, 1, 0, 0] and max_price >= sale.price and sale.price >= min_price:
+        elif sale.potion_type == [0, 1, 0, 0] and max_price >= sale.price and sale.price >= min_price and sale.ml_per_barrel < ml_room:
             green_memory.append(sale)
-        elif sale.potion_type == [0, 0, 1, 0] and max_price >= sale.price and sale.price >= min_price:
+        elif sale.potion_type == [0, 0, 1, 0] and max_price >= sale.price and sale.price >= min_price and sale.ml_per_barrel < ml_room:
             blue_memory.append(sale)
-        elif sale.potion_type == [0, 0, 0, 1] and max_price >= sale.price and sale.price >= min_price:
+        elif sale.potion_type == [0, 0, 0, 1] and max_price >= sale.price and sale.price >= min_price and sale.ml_per_barrel < ml_room:
             dark_memory.append(sale)
 
     dark_in_cat = True
@@ -156,7 +156,7 @@ def get_wholesale_purchase_plan(wholesale_catalog: list[Barrel]):
         for i in range(len(red_memory)):
             print("in red loop")
             red_bar = red_memory[i]
-            if red_bar.price <= red_bud and red_bar.ml_per_barrel <= ml_room and red_bar.quantity > 0:
+            if red_bar.price <= red_bud and red_bar.ml_per_barrel < ml_room and red_bar.quantity > 0:
                 if red_bar.sku in temp_barrel_wishlist:
                     temp_barrel_wishlist[red_bar.sku] += 1
                 else:
@@ -175,7 +175,7 @@ def get_wholesale_purchase_plan(wholesale_catalog: list[Barrel]):
         for i in range(len(green_memory)):
             print("in green loop")
             green_bar = green_memory[i]
-            if green_bar.price <= green_bud and green_bar.ml_per_barrel <= ml_room and green_bar.quantity > 0:
+            if green_bar.price <= green_bud and green_bar.ml_per_barrel < ml_room and green_bar.quantity > 0:
                 if green_bar.sku in temp_barrel_wishlist:
                     temp_barrel_wishlist[green_bar.sku] += 1
                 else:
@@ -194,7 +194,7 @@ def get_wholesale_purchase_plan(wholesale_catalog: list[Barrel]):
         for i in range(len(blue_memory)):
             print("in blue loop")
             blue_bar = blue_memory[i]
-            if blue_bar.price <= blue_bud and blue_bar.ml_per_barrel <= ml_room and blue_bar.quantity > 0:
+            if blue_bar.price <= blue_bud and blue_bar.ml_per_barrel < ml_room and blue_bar.quantity > 0:
                 if blue_bar.sku in temp_barrel_wishlist:
                     temp_barrel_wishlist[blue_bar.sku] += 1
                 else:
@@ -213,7 +213,7 @@ def get_wholesale_purchase_plan(wholesale_catalog: list[Barrel]):
         for i in range(len(dark_memory)):
             print("in dark loop")
             dark_bar = dark_memory[i]
-            if dark_bar.price <= dark_bud and dark_bar.ml_per_barrel <= ml_room and dark_bar.quantity > 0:
+            if dark_bar.price <= dark_bud and dark_bar.ml_per_barrel < ml_room and dark_bar.quantity > 0:
                 if dark_bar.sku in temp_barrel_wishlist:
                     temp_barrel_wishlist[dark_bar.sku] += 1
                 else:
