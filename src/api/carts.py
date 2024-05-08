@@ -14,7 +14,7 @@ router = APIRouter(
 class search_sort_options(str, Enum):
     customer_name = "customer_name"
     item_sku = "item_sku"
-    line_item_total = "gold"
+    line_item_total = "line_item_total"
     timestamp = "timestamp"
 
 class search_sort_order(str, Enum):
@@ -95,7 +95,7 @@ def search_orders(
     else:
         order_by_line = ""
 
-        
+
     print(order_by_line)
 
     with db.engine.begin() as connection:
