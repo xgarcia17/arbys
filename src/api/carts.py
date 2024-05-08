@@ -74,6 +74,8 @@ def search_orders(
     potion_sku = potion_sku.upper()
     print(customer_name, potion_sku, sort_col, sort_order)
 
+    order_by_line = f"ORDER BY {sort_col} {sort_order}"
+
     with db.engine.begin() as connection:
         result = connection.execute(sqlalchemy.text(f"""SELECT cart_items.id as line_item_id, 
                                                               potions_catalog.sku as item_sku,
@@ -85,9 +87,10 @@ def search_orders(
                                                     JOIN cart_items ON carts.id = cart_items.cart_id
                                                     JOIN potions_catalog on potions_catalog.id = cart_items.potion_id
                                                     WHERE carts.customer_name like :name AND potions_catalog.sku like :sku
+                                                    {order_by_line}
                                                     """),
                                                     {"name": '%'+customer_name+'%',
-                                                     "sku": '%'+potion_sku+'%',})
+                                                     "sku": '%'+potion_sku+'%'})
         
     orders = []
     count = 0
