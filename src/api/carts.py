@@ -92,6 +92,8 @@ def search_orders(
     orders = []
     count = 0
     try:
+        if search_page == "":
+            search_page = "0"
         page = int(search_page)
     except:
         raise Exception("Search Page must be a number")
