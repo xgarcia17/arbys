@@ -74,7 +74,29 @@ def search_orders(
     potion_sku = potion_sku.upper()
     print(customer_name, potion_sku, sort_col, sort_order)
 
-    order_by_line = f"ORDER BY {sort_col} {sort_order}"
+    col_str = ""
+    if sort_col == search_sort_options.timestamp:
+        col_str = "timestamp"
+    elif sort_col == search_sort_options.customer_name:
+        col_str = "customer_name"
+    elif sort_col == search_sort_options.line_item_total:
+        col_str = "gold"
+    elif sort_col == search_sort_options.item_sku:
+        col_str = "item_sku"
+
+    order_str = ""
+    if sort_order == search_sort_order.desc:
+        order_str = "desc"
+    elif sort_order == search_sort_order.asc:
+        order_str = "asc"
+
+    if col_str != "" or order_str != "":
+        order_by_line = f"ORDER BY {col_str} {order_str}"
+    else:
+        order_by_line = ""
+
+        
+    print(order_by_line)
 
     with db.engine.begin() as connection:
         result = connection.execute(sqlalchemy.text(f"""SELECT cart_items.id as line_item_id, 
