@@ -108,7 +108,7 @@ def search_orders(
                                                     FROM carts
                                                     JOIN cart_items ON carts.id = cart_items.cart_id
                                                     JOIN potions_catalog on potions_catalog.id = cart_items.potion_id
-                                                    WHERE carts.customer_name like :name AND potions_catalog.sku like :sku
+                                                    WHERE carts.customer_name ilike :name AND potions_catalog.sku ilike :sku
                                                     {order_by_line}
                                                     """),
                                                     {"name": '%'+customer_name+'%',
@@ -210,7 +210,7 @@ def set_item_quantity(cart_id: int, item_sku: str, cart_item: CartItem):
                                                     [{"item_sku": item_sku}])
     row = result.fetchone()
     potion_id = row.id 
-    cost = row.price
+    cost = row.price * cart_item.quantity
 
     with db.engine.begin() as connection:
         result = connection.execute(sqlalchemy.text(f"""INSERT INTO cart_items (
