@@ -17,7 +17,7 @@ def reset():
     inventory, and all barrels are removed from inventory. Carts are all reset.
     """
     with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""DELETE FROM ledgerized_inventory"""))
+        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE ledgerized_inventory"""))
 
     with db.engine.begin() as connection:
         result = connection.execute(sqlalchemy.text("""INSERT INTO ledgerized_inventory (
@@ -43,13 +43,13 @@ def reset():
                                                       "num_blue_ml": 0,
                                                       "num_dark_ml": 0}])
     with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""DELETE FROM potions_inventory"""))
+        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE potions_inventory"""))
     
     with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""DELETE FROM cart_items"""))
+        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE cart_items"""))
         
     with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""DELETE FROM carts"""))
+        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE carts"""))
 
     with db.engine.begin() as connection:
         result = connection.execute(sqlalchemy.text("""UPDATE shop_states
