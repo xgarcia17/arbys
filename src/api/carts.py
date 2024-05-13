@@ -139,7 +139,7 @@ def search_orders(
                 "timestamp": row.timestamp})
         count += 1
         
-    print(f"orders: {orders}")
+    # print(f"orders: {orders}")
 
     prev_str = ""
     prev = page - 1
