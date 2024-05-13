@@ -17,10 +17,9 @@ def reset():
     inventory, and all barrels are removed from inventory. Carts are all reset.
     """
     with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE ledgerized_inventory"""))
+        result1 = connection.execute(sqlalchemy.text("""TRUNCATE TABLE ledgerized_inventory"""))
 
-    with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""INSERT INTO ledgerized_inventory (
+        result2 = connection.execute(sqlalchemy.text("""INSERT INTO ledgerized_inventory (
                                                         order_type,
                                                         gold,
                                                         num_red_ml,
@@ -42,17 +41,12 @@ def reset():
                                                       "num_green_ml": 0,
                                                       "num_blue_ml": 0,
                                                       "num_dark_ml": 0}])
-    with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE potions_inventory"""))
-    
-    with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE cart_items"""))
-        
-    with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""TRUNCATE TABLE carts"""))
-
-    with db.engine.begin() as connection:
-        result = connection.execute(sqlalchemy.text("""UPDATE shop_states
+       
+        result3 = connection.execute(sqlalchemy.text("""TRUNCATE TABLE potions_inventory"""))
+       
+        result4 = connection.execute(sqlalchemy.text("""TRUNCATE TABLE carts, cart_items"""))
+       
+        result5 = connection.execute(sqlalchemy.text("""UPDATE shop_states
                                                         SET ml_capacity = 10000,
                                                         potion_capacity = 50,
                                                         increase_ml_cap = FALSE,
